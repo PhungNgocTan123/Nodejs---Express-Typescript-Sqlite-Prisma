@@ -13,7 +13,7 @@ datasource db {
 model Author {
   id        Int      @id @default(autoincrement())
   createdAt DateTime @default(now())
-  updateAt  DateTime @updatedAt
+  updatedAt DateTime @updatedAt
   firstname String
   lastname  String
   Book      Book[]
@@ -22,10 +22,10 @@ model Author {
 model Book {
   id            Int      @id @default(autoincrement())
   createdAt     DateTime @default(now())
-  updateAt      DateTime @updatedAt
+  updatedAt     DateTime @updatedAt
   title         String
   isFiction     Boolean
   datePublished DateTime
-  author        Author?  @relation(fields: [authorId], references: [id], onDelete: Cascade)
-  authorId      Int?
+  author        Author   @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  authorId      Int
 }
