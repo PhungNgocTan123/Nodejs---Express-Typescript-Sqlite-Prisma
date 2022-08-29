@@ -89,6 +89,6 @@ authorRouter.delete('/delete/:id', async (req: Request, res: Response, next: Nex
         await AuthorService.deleteAuthor(id);
         return res.status(200).json({ message: "Author has been successfully deleted" });
     } catch (error: any) {
-        return
+        return res.status(500).json(error.message);
     }
 })
