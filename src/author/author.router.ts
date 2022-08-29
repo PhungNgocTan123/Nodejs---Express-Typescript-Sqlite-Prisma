@@ -60,3 +60,35 @@ authorRouter.post('/create', body("firstname").isString(), body("lastname").isSt
         return res.status(500).json(error.message);
     }
 })
+
+// PUT: Updating an Author
+// Params: firstName, lastName
+
+authorRouter.put('/update/:id', body("firstname").isString(), body("lastname").isString(), async (req: Request, res: Response, next: NextFunction) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    };
+    const id: number = parseInt(req.params.id, 10);
+    try {
+        const author = req.body;
+        const updateAuthor = await AuthorService.updateAuthor(author, id);
+        return res.status(201).json(updateAuthor);
+    } catch (error: any) {
+        return res.status(500).json(error.message);
+    }
+})
+
+
+// DELETE: delete an author base on id
+
+authorRouter.delete('/delete/:id', async (req: Request, res: Response, next: NextFunction) => {
+    const id: number = parseInt(req.params.id, 10);
+
+    try {
+        await AuthorService.deleteAuthor(id);
+        return res.status(200).json({ message: "Author has been successfully deleted" });
+    } catch (error: any) {
+        return
+    }
+})
